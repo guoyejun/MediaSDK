@@ -1611,8 +1611,8 @@ void CTranscodingPipeline::SetEncCtrlRT(ExtendedSurface& extSurface, bool bInser
             m_extBuffPtrStorage[keyId].push_back((mfxExtBuffer *)&m_bufExtMBQP[keyId]);
 #endif
         } else {
-            if (m_ROIData.size() > m_nSubmittedFramesNum)
-                m_extBuffPtrStorage[keyId].push_back((mfxExtBuffer *)&m_ROIData[m_nSubmittedFramesNum]);
+            //if (m_ROIData.size() > m_nSubmittedFramesNum)
+                m_extBuffPtrStorage[keyId].push_back((mfxExtBuffer *)&m_ROIData[0]);
         }
 
         // Replace the buffers pointer to pre-allocated storage
