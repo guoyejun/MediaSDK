@@ -1467,6 +1467,10 @@ mfxStatus CEncodingPipeline::Init(sInputParams *pParams)
     isV4L2InputEnabled = pParams->isV4L2InputEnabled;
 #endif
 
+    m_roi = (mfxExtEncoderROI*)malloc(sizeof(*m_roi));
+    m_roi->Header.BufferId = MFX_EXTBUFF_ENCODER_ROI;
+    m_roi->ROIMode = MFX_ROI_MODE_QP_DELTA;
+
     m_MVCflags = pParams->MVC_flags;
 
     // FileReader can convert yv12->nv12 without vpp
@@ -1768,6 +1772,17 @@ mfxStatus CEncodingPipeline::InitEncFrameParams(sTask* pTask)
 
     ctrl.Payload = m_UserDataUnregSEI.data();
     ctrl.NumPayload = (mfxU16)m_UserDataUnregSEI.size();
+
+    m_roi->NumROI = 1;
+    m_roi->ROI[0].Left = 128;
+    m_roi->ROI[0].Right = 256;
+    m_roi->ROI[0].Top = 64;
+    m_roi->ROI[0].Bottom = 256;
+    m_roi->ROI[0].DeltaQP = 40;
+
+    ctrl.NumExtParam = 1;
+    ctrl.ExtParam = (mfxExtBuffer **)&(m_roi);
+    ctrl.FrameType = 0;
 
     return MFX_ERR_NONE;
 }

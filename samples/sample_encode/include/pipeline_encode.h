@@ -348,6 +348,8 @@ protected:
 
     CHWDevice *m_hwdev;
 
+    mfxExtEncoderROI *m_roi;
+
     bool m_bQPFileMode;
 
     bool isV4L2InputEnabled;
